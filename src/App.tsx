@@ -6,7 +6,7 @@ export const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={reactLogo} className="App-logo" alt="logo" />
+        <img alt="logo" className="App-logo" src={reactLogo} />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
