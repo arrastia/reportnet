@@ -1,3 +1,4 @@
+import memoji from './memoji.png';
 import reactLogo from './reactLogo.svg';
 
-export { reactLogo };
+export { memoji, reactLogo };
