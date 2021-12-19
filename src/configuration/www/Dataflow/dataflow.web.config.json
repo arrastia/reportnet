@@ -1,4 +1,5 @@
 {
+  "dataflows": "/dataflow/{:dataflowType}",
   "publicDataflow": "/dataflow/getPublicDataflow/{:dataflowId}",
   "publicDataflows": "/dataflow/getPublicDataflows"
 }

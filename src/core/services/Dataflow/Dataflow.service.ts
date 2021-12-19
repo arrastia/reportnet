@@ -1,6 +1,6 @@
 import { DataflowRepository } from 'core/repositories/Dataflow';
 
-import Dataflow from 'core/entities/Dataflow';
+import Dataflow, { DataflowType } from 'core/entities/Dataflow';
 import Document, { IDocumentController } from 'core/entities/Document';
 import WebLink, { IWebLinkController } from 'core/entities/WebLink';
 
@@ -24,6 +24,22 @@ const parseWebLinks = (webLinks: IWebLinkController[]) => {
   return webLinks.map(webLink => new WebLink({ description: webLink.description, id: webLink.id, isPublic: webLink.isPublic, url: webLink.url }));
 };
 
+const list = async (type: DataflowType) => {
+  const dataflows = await DataflowRepository.list(type);
+
+  return dataflows.map(
+    dataflow =>
+      new Dataflow({
+        documents: parseDocuments(dataflow.documents),
+        id: dataflow.id,
+        name: dataflow.name,
+        status: dataflow.status,
+        type: dataflow.type,
+        webLinks: parseWebLinks(dataflow.weblinks)
+      })
+  );
+};
+
 const publicList = async () => {
   const dataflows = await DataflowRepository.publicList();
 
@@ -40,4 +56,4 @@ const publicList = async () => {
   );
 };
 
-export const DataflowService = { publicList };
+export const DataflowService = { list, publicList };
