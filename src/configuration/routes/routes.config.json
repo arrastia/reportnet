@@ -1,5 +1,9 @@
 {
   "DATAFLOW": "/:id",
   "DATAFLOWS": "/",
-  "PUBLIC": "/"
+  "MESSENGER": "/messenger",
+  "PUBLIC": "/",
+  "USER_SETTINGS": "/settings",
+  "NOTIFICATIONS_&_SOUNDS": "/settings/notifications",
+  "APPEARANCE": "/settings/appearance"
 }
