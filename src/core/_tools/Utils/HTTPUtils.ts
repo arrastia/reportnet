@@ -1,4 +1,15 @@
 import axios, { AxiosPromise, AxiosRequestHeaders, ResponseType } from 'axios';
+import { keys } from 'configuration/keys';
+import { userWebConfig } from 'configuration/www/User';
+import { authAxios } from './AxiosUtils';
+
+import { InterceptorsUtils } from './InterceptorsUtils';
+import { LocalStorageUtils } from './LocalStorageUtils';
+import { URLUtils } from './URLUtils';
+
+const { setupInterceptorsTo } = InterceptorsUtils;
+
+// setupInterceptorsTo(axios);
 
 interface HTTPProps<D = any> {
   data?: D;
@@ -7,22 +18,20 @@ interface HTTPProps<D = any> {
   url: string;
 }
 
-const baseURL = process.env.REACT_APP_DEV_URL;
-
 const get = (options: HTTPProps): AxiosPromise => {
-  return axios.get(`${baseURL}${options.url}`, { headers: options.headers, params: options.data, responseType: options.responseType });
+  return authAxios.get(`${options.url}`, { params: options.data, responseType: options.responseType });
 };
 
 const post = (options: HTTPProps): AxiosPromise => {
-  return axios.post(`${baseURL}${options.url}`, { headers: options.headers, params: options.data, responseType: options.responseType });
+  return authAxios.post(`${options.url}`, { params: options.data, responseType: options.responseType });
 };
 
 const remove = (options: HTTPProps): AxiosPromise => {
-  return axios.delete(`${baseURL}${options.url}`, { headers: options.headers, params: options.data, responseType: options.responseType });
+  return authAxios.delete(`${options.url}`, { params: options.data, responseType: options.responseType });
 };
 
 const update = (options: HTTPProps): AxiosPromise => {
-  return axios.put(`${baseURL}${options.url}`, { headers: options.headers, params: options.data, responseType: options.responseType });
+  return authAxios.put(`${options.url}`, { params: options.data, responseType: options.responseType });
 };
 
 export const HTTPUtils = { get, post, remove, update };
