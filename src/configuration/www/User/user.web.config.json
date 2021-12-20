@@ -1,8 +1,5 @@
 {
   "configuration": "/user/getAttributes",
-  "refreshToken": "/user/refreshToken?refreshToken={:refreshToken}",
-  "singIn": "/user/generateToken?password={:password}&username={:username}",
-  "singOut": "/user/logout?refreshToken={:refreshToken}",
   "updateConfiguration": "/user/updateAttributes",
   "userInformation": "/user/getUserByUserId?userId={:userId}"
 }
