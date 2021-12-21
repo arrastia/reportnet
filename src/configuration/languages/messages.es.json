@@ -1,7 +1,15 @@
 {
-  "en": {
+  "es": {
     "dataflow": {},
-    "dataflows": {},
+    "homepage": {
+      "businessDataflows": "Business dataflows",
+      "citizenScienceDataflows": "Citizen science dataflows",
+      "dataflows": "Dataflows",
+      "referenceDataflows": "Reference dataflows",
+      "reportingDataflows": "Reporting dataflows",
+      "actions": "Acciones",
+      "permissions": "Permisos"
+    },
     "public": {}
   }
 }
