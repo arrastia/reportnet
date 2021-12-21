@@ -14,10 +14,9 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
-    // "react/default-props-match-prop-types": "warn",
     "react/jsx-key": "error",
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-target-blank": "error",
@@ -31,8 +30,9 @@
     "react/no-deprecated": "error",
     "react/no-direct-mutation-state": "error",
     "react/no-multi-comp": "error",
-    // "react/no-unused-prop-types": "warn",
     "react/no-unused-state": "warn",
     "semi": ["error", "always"]
+    // "react/default-props-match-prop-types": "warn",
+    // "react/no-unused-prop-types": "warn",
   }
 }
