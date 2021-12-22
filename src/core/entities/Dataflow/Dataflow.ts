@@ -4,6 +4,11 @@ import { IWebLink } from 'core/entities/WebLink';
 export type DataflowStatus = 'DESIGN' | 'DRAFT';
 export type DataflowType = 'REPORTING' | 'CITIZEN_SCIENCE' | 'REFERENCE' | 'BUSINESS';
 
+export interface DataflowAmount {
+  amount: number;
+  type: DataflowType;
+}
+
 export interface Dataflow {
   creationDate?: Date;
   documents: IDocument[];

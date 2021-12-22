@@ -24,18 +24,24 @@ const parseWebLinks = (webLinks: IWebLinkController[]) => {
   return webLinks.map(webLink => new WebLink({ description: webLink.description, id: webLink.id, isPublic: webLink.isPublic, url: webLink.url }));
 };
 
+const amount = async () => {
+  const response = await DataflowRepository.amount();
+
+  return response.reduce((obj, item) => Object.assign(obj, { [item.type]: item.amount }), {}) as Record<DataflowType, number>;
+};
+
 const list = async (type: DataflowType) => {
   const dataflows = await DataflowRepository.list(type);
 
   return dataflows.map(
     dataflow =>
       new Dataflow({
-        documents: parseDocuments(dataflow.documents),
+        documents: [],
         id: dataflow.id,
         name: dataflow.name,
         status: dataflow.status,
         type: dataflow.type,
-        webLinks: parseWebLinks(dataflow.weblinks)
+        webLinks: []
       })
   );
 };
@@ -46,14 +52,17 @@ const publicList = async () => {
   return dataflows.map(
     dataflow =>
       new Dataflow({
-        documents: parseDocuments(dataflow.documents),
+        documents: [],
         id: dataflow.id,
         name: dataflow.name,
         status: dataflow.status,
         type: dataflow.type,
-        webLinks: parseWebLinks(dataflow.weblinks)
+        webLinks: []
       })
   );
 };
 
-export const DataflowService = { list, publicList };
+export const DataflowService = { amount, list, publicList };
+
+// webLinks: parseWebLinks(dataflow.weblinks)
+// webLinks: parseWebLinks(dataflow.weblinks)

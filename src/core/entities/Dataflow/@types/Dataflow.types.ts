@@ -19,6 +19,11 @@ export interface DataflowController {
   weblinks: IWebLinkController[];
 }
 
+export interface DataflowAmountController {
+  amount: number;
+  type: DataflowType;
+}
+
 interface ObligationController {
   client: string | null;
   comment: string | null;

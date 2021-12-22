@@ -1,6 +1,6 @@
 import { dataflowWebConfig } from 'configuration/www/Dataflow';
 
-import { DataflowType, IDataflowController } from 'core/entities/Dataflow';
+import { DataflowType, IDataflowAmountController, IDataflowController } from 'core/entities/Dataflow';
 
 import { HTTPUtils } from 'core/_tools/Utils/HTTPUtils';
 import { URLUtils } from 'core/_tools/Utils/URLUtils';
@@ -15,6 +15,12 @@ const URL_PARAMS = {
   REPORTING: 'getDataflows'
 };
 
+const amount = async (): Promise<IDataflowAmountController[]> => {
+  const { data } = await get({ url: parseURL({ url: dataflowWebConfig.amount }) });
+
+  return data;
+};
+
 const list = async (type: DataflowType): Promise<IDataflowController[]> => {
   const { data } = await get({ url: parseURL({ url: dataflowWebConfig.dataflows, params: { dataflowType: URL_PARAMS[type] } }) });
 
@@ -27,4 +33,4 @@ const publicList = async (): Promise<IDataflowController[]> => {
   return data;
 };
 
-export const DataflowRepository = { list, publicList };
+export const DataflowRepository = { amount, list, publicList };
