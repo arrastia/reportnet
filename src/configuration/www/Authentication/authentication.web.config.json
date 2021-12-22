@@ -1,5 +1,5 @@
 {
   "refreshToken": "/user/refreshToken?refreshToken={:refreshToken}",
-  "singIn": "/user/generateToken?password={:password}&username={:username}",
-  "singOut": "/user/logout?refreshToken={:refreshToken}"
+  "signIn": "/user/generateToken?password={:password}&username={:username}",
+  "signOut": "/user/logout?refreshToken={:refreshToken}"
 }
