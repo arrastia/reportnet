@@ -1,11 +1,13 @@
-import axios, { AxiosError, AxiosRequestConfig, HeadersDefaults } from 'axios';
+import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, HeadersDefaults } from 'axios';
 
-import { keys } from 'configuration/keys';
-import { userWebConfig } from 'configuration/www/User';
+import { authenticationWebConfig } from 'configuration/www/Authentication';
 
-import { LocalStorageUtils } from 'core/_tools/Utils/LocalStorageUtils';
-import { URLUtils } from 'core/_tools/Utils/URLUtils';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from 'configuration/constants/authentication.constants';
 
+import { CookiesUtils } from './CookiesUtils';
+import { URLUtils } from './URLUtils';
+
+const { getCookie, setCookie } = CookiesUtils;
 const { parseURL } = URLUtils;
 
 interface OriginalRequest extends AxiosRequestConfig<any> {
@@ -16,42 +18,40 @@ interface AuthAxios extends HeadersDefaults {
   Authorization: `Bearer ${string}`;
 }
 
-const accessToken = LocalStorageUtils.getItem({ key: keys.ACCESS_TOKEN });
+const authAxios = axios.create({ baseURL: process.env.REACT_APP_DEV_URL, headers: { Authorization: `Bearer ${getCookie(ACCESS_TOKEN)}` } });
 
-const authAxios = axios.create({ baseURL: process.env.REACT_APP_DEV_URL, headers: { Authorization: `Bearer ${accessToken}` } });
+const onResponseError = async (error: AxiosError): Promise<AxiosError<any, any> | AxiosPromise<any> | undefined> => {
+  const originalRequest: OriginalRequest = error.config;
 
-authAxios.interceptors.response.use(
-  response => response,
-  (error: AxiosError) => {
-    const originalRequest: OriginalRequest = error.config;
+  if (error?.response?.status === 401 && !originalRequest._retry) {
+    originalRequest._retry = true;
+    const prevRefreshToken = getCookie(REFRESH_TOKEN);
 
-    if (error?.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      const refreshToken = LocalStorageUtils.getItem({ key: keys.REFRESH_TOKEN });
+    try {
+      const { data } = await authAxios.post(parseURL({ url: authenticationWebConfig.refreshToken, params: { refreshToken: prevRefreshToken } }));
+      const { accessToken, refreshToken } = data;
 
-      return authAxios.post(parseURL({ url: userWebConfig.refreshToken, params: { refreshToken } })).then(res => {
-        const { accessToken, refreshToken } = res.data;
+      setCookie({ name: ACCESS_TOKEN, value: accessToken });
+      setCookie({ name: REFRESH_TOKEN, value: refreshToken });
 
-        if (res.status >= 200 && res.status <= 299) {
-          window.localStorage.setItem(keys.ACCESS_TOKEN, accessToken);
-          window.localStorage.setItem(keys.REFRESH_TOKEN, refreshToken);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+      authAxios.defaults.headers = { ...authAxios.defaults.headers, Authorization: `Bearer ${accessToken}` } as AuthAxios;
+      originalRequest.headers = { ...originalRequest.headers, Authorization: `Bearer ${accessToken}` };
 
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-          authAxios.defaults.headers = { ...authAxios.defaults.headers, Authorization: `Bearer ${accessToken}` } as AuthAxios;
-          originalRequest.headers = { ...originalRequest.headers, Authorization: `Bearer ${accessToken}` };
-
-          return axios(originalRequest);
-        }
-      });
+      return axios(originalRequest);
+    } catch (error) {
+      throw new Error('Error intercepting request.');
     }
-
-    if (error?.response?.status === 403) {
-      window.location.href = '/';
-      return;
-    }
-
-    return Promise.reject(error);
   }
-);
+
+  if (error?.response?.status === 403) {
+    window.location.href = '/';
+    return;
+  }
+
+  return Promise.reject(error);
+};
+
+authAxios.interceptors.response.use(response => response, onResponseError);
 
 export { authAxios };

@@ -1,13 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { keys } from 'configuration/keys';
-
-const token = localStorage.getItem(keys.ACCESS_TOKEN);
-const refreshToken = localStorage.getItem(keys.REFRESH_TOKEN);
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   // console.info(`[request] [${JSON.stringify(config)}]`);
-  config!.headers!['Authorization'] = `Bearer ${token}`;
-
   return config;
 };
 

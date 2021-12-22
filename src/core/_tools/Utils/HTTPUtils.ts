@@ -1,15 +1,6 @@
-import axios, { AxiosPromise, AxiosRequestHeaders, ResponseType } from 'axios';
-import { keys } from 'configuration/keys';
-import { userWebConfig } from 'configuration/www/User';
+import { AxiosPromise, AxiosRequestHeaders, ResponseType } from 'axios';
+
 import { authAxios } from './AxiosUtils';
-
-import { InterceptorsUtils } from './InterceptorsUtils';
-import { LocalStorageUtils } from './LocalStorageUtils';
-import { URLUtils } from './URLUtils';
-
-const { setupInterceptorsTo } = InterceptorsUtils;
-
-// setupInterceptorsTo(axios);
 
 interface HTTPProps<D = any> {
   data?: D;
