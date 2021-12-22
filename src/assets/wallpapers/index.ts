@@ -1,4 +1,5 @@
 import europe from './europe.jpg';
 import hungary from './hungary.jpg';
+import basqueCountry from './basque-country.jpg';
 
-export { europe, hungary };
+export { basqueCountry, europe, hungary };
