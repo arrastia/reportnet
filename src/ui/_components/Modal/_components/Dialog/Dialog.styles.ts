@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-
 import { zoom } from 'ui/_styles/keyframes';
 
 const ButtonWrapper = styled('span')`
