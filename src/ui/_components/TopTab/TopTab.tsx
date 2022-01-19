@@ -9,8 +9,8 @@ export const TopTab = <T extends {}>({ elements, onChange, value }: ITopTab<T>) 
 
       {elements.map(element => (
         <Styles.Tab isActive={element.value === value} key={element.id} onClick={() => onChange(element.value)}>
-          {element.badge ? <Styles.Badge>{element.badge}</Styles.Badge> : null}
           <Styles.TabLabel>{element.label}</Styles.TabLabel>
+          {element.badge ? <Styles.Badge>{element.badge}</Styles.Badge> : null}
         </Styles.Tab>
       ))}
     </Styles.TabBar>

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { Badge } from 'ui/_styles/components/Badge';
+import { Badge as SBadge } from 'ui/_styles/components/Badge';
 import { Row } from 'ui/_styles/components/Row';
 
 const TabLabel = styled('p')`
@@ -71,6 +71,14 @@ const TabBar = styled(Row)`
   justify-content: center;
   position: relative;
   /* margin: 2rem; */
+`;
+
+const Badge = styled(SBadge)`
+  font-size: 0.75rem;
+  height: 0.75rem;
+  position: relative;
+  transform: translate(0);
+  width: 0.75rem;
 `;
 
 export const Styles = { Badge, Indicator, Tab, TabBar, TabLabel };
