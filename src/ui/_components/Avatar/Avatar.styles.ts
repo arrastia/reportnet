@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-const Avatar = styled('img')<{ size?: { height: string; width: string } }>`
+import { Avatar } from 'ui/_styles/components/Avatar';
+
+const EmojiAvatar = styled(Avatar).attrs({ bgColor: 'lightblue' })``;
+
+const InitialsAvatar = styled(Avatar).attrs({ bgColor: 'lightgreen' })``;
+
+const PhotoAvatar = styled('img')<{ size?: { height: string; width: string } }>`
+  align-self: center;
+  border-radius: 50%;
   cursor: pointer;
   height: ${({ size }) => (size?.height ? size.height : '20vmin')};
   transition: transform 0.1s ease-in;
@@ -13,4 +21,6 @@ const Avatar = styled('img')<{ size?: { height: string; width: string } }>`
   }
 `;
 
-export const Styles = { Avatar };
+const StickerAvatar = styled(Avatar).attrs({ bgColor: 'purple' })``;
+
+export const Styles = { EmojiAvatar, InitialsAvatar, PhotoAvatar, StickerAvatar };
