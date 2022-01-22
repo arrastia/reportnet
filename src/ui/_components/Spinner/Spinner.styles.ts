@@ -41,14 +41,16 @@ const ClipSpinner = styled('span')`
 `;
 
 const Spinner = styled('div')`
+  /* height: 100%; */
+  /* left: 0; */
+  /* position: absolute; */
+  /* top: 0; */
+  /* width: 100%; */
   align-items: center;
   display: flex;
-  height: 100%;
+  height: fit-content;
   justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  width: fit-content;
 `;
 
 const SyncLoader = styled('span')`

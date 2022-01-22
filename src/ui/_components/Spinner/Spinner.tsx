@@ -6,7 +6,7 @@ import { MARGIN, SIZE, SPEED_MULTIPLIER } from 'configuration/constants/spinner.
 
 import { SpinnerProps } from './@types/Spinner.types';
 
-export const Spinner: FC<SpinnerProps> = ({ className, color, type }) => {
+export const Spinner: FC<SpinnerProps> = ({ className, color, margin, size, type }) => {
   function parseLengthAndUnit(size: number) {
     return { value: size, unit: 'px' };
   }
@@ -21,17 +21,17 @@ export const Spinner: FC<SpinnerProps> = ({ className, color, type }) => {
     animationDuration: `${0.6 / SPEED_MULTIPLIER}s`,
     animationDelay: `${index * 0.07}s`,
     backgroundColor: color,
-    height: cssValue(SIZE),
-    margin: cssValue(MARGIN),
-    width: cssValue(SIZE)
+    height: cssValue(size || SIZE),
+    margin: cssValue(margin || MARGIN),
+    width: cssValue(size || SIZE)
   });
 
   const renderCLipStyles = {
     animationDuration: `${0.75 / SPEED_MULTIPLIER}s`,
     WebkitAnimationDuration: `${0.75 / SPEED_MULTIPLIER}s`,
     borderColor: color,
-    height: cssValue(SIZE),
-    width: cssValue(SIZE)
+    height: cssValue(size || SIZE),
+    width: cssValue(size || SIZE)
   };
 
   const renderClipSpinner = () => <Styles.ClipSpinner style={renderCLipStyles} />;
