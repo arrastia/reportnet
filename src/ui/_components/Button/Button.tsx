@@ -1,10 +1,12 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 
 import { Styles } from './Button.styles';
 
-import { IButton } from './@types/Button.types';
+import { Spinner } from '../Spinner';
 
-export const Button: FC<IButton> = ({ className, icon, isDisabled, label, onClick, style, type, iconSize, ...rest }) => {
+import type { IButton } from 'ui/@types/Button';
+
+export const Button: FC<IButton> = ({ className, icon, iconSize, isDisabled, isLoading, label, onClick, style, type, ...rest }) => {
   const onButtonClick = () => {
     if (isDisabled || !onClick) return;
 
@@ -15,10 +17,20 @@ export const Button: FC<IButton> = ({ className, icon, isDisabled, label, onClic
 
   const renderLabel = () => (label ? <Styles.Text>{label}</Styles.Text> : null);
 
+  const renderContent = () => {
+    if (isLoading) return <Spinner color="white" margin={3} size={10} />;
+
+    return (
+      <Fragment>
+        {renderIcon()}
+        {renderLabel()}
+      </Fragment>
+    );
+  };
+
   return (
     <Styles.Button className={`${className} ${type} ${isDisabled ? 'disabled' : ''}`} onClick={onButtonClick} style={style} {...rest}>
-      {renderIcon()}
-      {renderLabel()}
+      {renderContent()}
     </Styles.Button>
   );
 };
