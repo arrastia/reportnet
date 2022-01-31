@@ -23,7 +23,7 @@ export const UserCard: FC<UserCardProps> = ({ size }) => {
   const { push } = useHistory();
 
   const getSubtitle = () => {
-    const subtitle = { ONLY_ICON: '', INFORMATION: userRole, EDITING: 'editing' };
+    const subtitle = { ONLY_ICON: 'Welcome back 👋', INFORMATION: userRole, EDITING: 'editing' };
 
     return subtitle[cardShape];
   };
