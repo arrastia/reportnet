@@ -1,15 +1,31 @@
-import { StrictMode } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { render } from 'react-dom';
-
-import './index.css';
+import { RecoilRoot, SetRecoilState } from 'recoil';
 
 import { App } from './App';
 
+import { Spinner } from 'ui/_components/Spinner';
+
+import { themeStore } from 'ui/_tools/Atoms/UserStore';
+
 import reportWebVitals from './reportWebVitals';
+
+function initializeThemeStore({ set }: { set: SetRecoilState }) {
+  const localStorageValue = window.localStorage.getItem('dark-mode-enabled') || 'false';
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)') || 'false';
+
+  const enabled = JSON.parse(localStorageValue) ?? prefersDarkMode;
+
+  set(themeStore, enabled);
+}
 
 render(
   <StrictMode>
-    <App />
+    <RecoilRoot initializeState={initializeThemeStore}>
+      <Suspense fallback={<Spinner />}>
+        <App />
+      </Suspense>
+    </RecoilRoot>
   </StrictMode>,
   document.getElementById('root')
 );
