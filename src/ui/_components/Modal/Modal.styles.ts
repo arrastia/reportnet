@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
-
 import { fade } from 'ui/_styles/keyframes';
+
+// import { fade } from 'styles/Keyframes';
 
 const sizes = css`
   height: 100%;

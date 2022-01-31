@@ -1,4 +1,4 @@
-import { CSSProperties, FC, ReactElement, ReactNode } from 'react';
+import { FC, ReactElement, ReactNode } from 'react';
 
 import { Styles } from './Dialog.styles';
 
@@ -11,7 +11,7 @@ interface DialogProps {
   cancelLabel: string;
   confirmButtonType: 'delete' | 'primary' | 'secondary' | 'transparent';
   confirmLabel: string;
-  customStyles?: CSSProperties;
+  customStyles: {};
   duration: number;
   enterAnimation: string;
   height: number;

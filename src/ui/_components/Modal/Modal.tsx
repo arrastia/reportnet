@@ -1,11 +1,11 @@
-import { AnimationEvent, CSSProperties, FC, KeyboardEvent, ReactElement, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import { AnimationEvent, FC, KeyboardEvent, ReactElement, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Styles } from './Modal.styles';
 
 import { Dialog } from './_components/Dialog/Dialog';
 
-// import { useLayoutFilter } from 'ui/_tools/Hooks/useLayoutFilter';
+import { useLayoutFilter } from 'ui/_tools/Hooks/useLayoutFilter';
 
 interface ModalProps {
   animation: 'door' | 'fade' | 'flip' | 'rotate' | 'slideDown' | 'slideLeft' | 'slideRight' | 'slideUp' | 'zoom';
@@ -15,8 +15,8 @@ interface ModalProps {
   closeOnEsc: boolean;
   confirmButtonType: 'delete' | 'primary' | 'secondary' | 'transparent';
   confirmLabel: string;
-  customMaskStyles?: CSSProperties;
-  customStyles?: CSSProperties;
+  customMaskStyles: {};
+  customStyles: {};
   duration: number;
   enterAnimation: string;
   height: number;
@@ -68,7 +68,7 @@ export const Modal: FC<ModalProps> = ({
 
   const modalRef: RefObject<HTMLDivElement> = useRef(null);
 
-  // const setIsEnabled = useLayoutFilter();
+  const setIsEnabled = useLayoutFilter();
 
   useEffect(() => {
     visible ? enter() : leave();
@@ -87,13 +87,13 @@ export const Modal: FC<ModalProps> = ({
   const enter = () => {
     setIsVisible(true);
     setAnimationType('enter');
-    // setIsEnabled(true);
+    setIsEnabled(true);
   };
 
   const leave = () => {
     // setIsVisible(false); NO ANIMATION
     setAnimationType('leave');
-    // setIsEnabled(false);
+    setIsEnabled(false);
   };
 
   const onKeyUp = (event: KeyboardEvent) => {
