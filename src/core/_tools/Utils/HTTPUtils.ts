@@ -1,6 +1,6 @@
-import { AxiosPromise, AxiosRequestHeaders, ResponseType } from 'axios';
-
 import { authAxios } from './AxiosUtils';
+
+import type { AxiosPromise, AxiosRequestHeaders, ResponseType } from 'axios';
 
 interface HTTPProps<D = any> {
   data?: D;
